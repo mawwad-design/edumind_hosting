@@ -1,0 +1,355 @@
+<title>قرار تشغيل EduMind</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Poppins:wght@500;600;700&display=swap');
+
+  /* ===== ats-ware brand tokens (from src/styles/tokens/colors.css) ===== */
+  :root{
+    --navy:#0d1526;
+    --deep:#0b1b2f;
+    --green:#65c6bf;
+    --green-ink:#11141e;
+    --gray:#667080;
+
+    --bg:#ffffff;
+    --surface:#ffffff;
+    --card:#f9f9fb;
+    --elevated:#f5f7fa;
+    --heading:#0d1526;
+    --body:#667080;
+    --border:#e5e8eb;
+    --track:#eef1f4;
+    --band-a:#0d1526;
+    --band-b:#0b1b2f;
+    --on-band:#ffffff;
+    --on-band-soft:#c3ccd6;
+    --cost:#0d1526;
+
+    --shadow-sm:0 1px 2px rgba(13,21,38,.05);
+    --shadow-md:0 4px 12px -2px rgba(13,21,38,.08), 0 2px 4px -2px rgba(13,21,38,.05);
+    --shadow-lg:0 12px 28px -6px rgba(13,21,38,.12), 0 4px 8px -4px rgba(13,21,38,.06);
+
+    --r-md:.5rem; --r-lg:.75rem; --r-xl:1rem; --r-full:9999px;
+    --ff:'Tajawal', system-ui, 'Segoe UI', sans-serif;
+    --ff-latin:'Poppins','Tajawal',sans-serif;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      --bg:#11141e; --surface:#11141e; --card:#171b26; --elevated:#252935;
+      --heading:#ffffff; --body:#a6adb8; --border:#333847; --track:#252935;
+      --band-a:#0d1526; --band-b:#0b1b2f; --on-band:#ffffff; --on-band-soft:#a6adb8;
+      --cost:#c3ccd6;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+      --shadow-md:0 4px 12px -2px rgba(0,0,0,.5),0 2px 4px -2px rgba(0,0,0,.4);
+      --shadow-lg:0 12px 28px -6px rgba(0,0,0,.6),0 4px 8px -4px rgba(0,0,0,.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#11141e; --surface:#11141e; --card:#171b26; --elevated:#252935;
+    --heading:#ffffff; --body:#a6adb8; --border:#333847; --track:#252935;
+    --band-a:#0d1526; --band-b:#0b1b2f; --on-band:#ffffff; --on-band-soft:#a6adb8;
+    --cost:#c3ccd6;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+    --shadow-md:0 4px 12px -2px rgba(0,0,0,.5),0 2px 4px -2px rgba(0,0,0,.4);
+    --shadow-lg:0 12px 28px -6px rgba(0,0,0,.6),0 4px 8px -4px rgba(0,0,0,.45);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--body);font-family:var(--ff);line-height:1.65}
+  #app{direction:rtl}
+  .wrap{max-width:1000px;margin:0 auto;padding-inline:18px;padding-bottom:22px}
+
+  h1,h2,h3{color:var(--heading);margin:0;line-height:1.25;text-wrap:balance;font-weight:800}
+  .latin{font-family:var(--ff-latin);font-weight:600;letter-spacing:.2px}
+
+  /* ===== Header ===== */
+  header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;
+    background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border)}
+  .site-in{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 22%,transparent)}
+  .brand b{font-family:var(--ff-latin);font-weight:700;font-size:18px;color:var(--heading)}
+  .brand b i{color:var(--green);font-style:normal}
+  .tbtn{border:1px solid var(--border);background:var(--surface);color:var(--body);border-radius:var(--r-full);
+    width:38px;height:38px;display:grid;place-items:center;cursor:pointer;transition:.15s}
+  .tbtn:hover{color:var(--green);border-color:var(--green)}
+  .tbtn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+
+  /* ===== Hero band ===== */
+  .hero{margin-top:16px}
+  .band{background:linear-gradient(135deg,var(--band-a),var(--band-b));border-radius:var(--r-xl);
+    padding:34px 30px;color:var(--on-band);box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap}
+  .band::after{content:"";position:absolute;inset-inline-start:-60px;inset-block-start:-60px;
+    width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--green) 30%,transparent),transparent 70%)}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;
+    background:color-mix(in srgb,#fff 12%,transparent);color:#fff;padding:6px 13px;border-radius:var(--r-full);
+    border:1px solid color-mix(in srgb,#fff 16%,transparent)}
+  .eyebrow .d{width:7px;height:7px;border-radius:50%;background:var(--green)}
+  .band h1{color:#fff;font-size:clamp(22px,4vw,32px);margin:0;max-width:27ch;line-height:1.4;text-wrap:balance;position:relative;z-index:1}
+  .band-logo{flex:none;color:#fff;line-height:0;position:relative;z-index:1}
+  .band-logo svg{height:46px;width:auto;display:block}
+  @media(max-width:560px){.band-logo svg{height:38px}}
+  .band p{color:var(--on-band-soft);font-size:clamp(15px,2.2vw,17px);margin:0;max-width:58ch}
+
+  /* ===== Section ===== */
+  section{margin-top:24px}
+  .sec-head{margin-bottom:16px}
+  .sec-head h2{font-size:21px}
+  .sec-head p{margin:6px 0 0;font-size:14px;color:var(--body)}
+
+  /* ===== Explorer grid ===== */
+  .explorer{display:block}
+
+  .options{display:grid;gap:12px;margin-bottom:18px}
+  @media(min-width:560px){.options{grid-template-columns:1fr 1fr}}
+  .opt{width:100%;text-align:start;font-family:inherit;color:inherit;cursor:pointer;
+    background:var(--surface);border:1.6px solid var(--border);border-radius:var(--r-lg);
+    padding:15px 16px;transition:border-color .18s,box-shadow .18s,transform .18s;box-shadow:var(--shadow-sm);position:relative}
+  .opt:hover{transform:translateY(-1px);box-shadow:var(--shadow-md);border-color:color-mix(in srgb,var(--green) 45%,var(--border))}
+  .opt:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+  .opt[aria-pressed="true"]{border-color:var(--green);box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 26%,transparent),var(--shadow-md)}
+  .opt-row{display:flex;align-items:center;gap:12px}
+  .opt .title{font-weight:700;color:var(--heading);font-size:15.5px;flex:1}
+  .opt .grp{font-size:11px;color:var(--body);background:var(--card);border:1px solid var(--border);
+    padding:2px 9px;border-radius:var(--r-full);white-space:nowrap}
+  .opt .more{margin-top:2px;margin-inline-start:0;background:none;border:none;color:var(--green);
+    font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:6px 0 0;display:inline-flex;align-items:center;gap:5px}
+  .opt .more:focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:4px}
+  .opt .detail{margin-top:8px;margin-inline-start:0;font-size:13.5px;color:var(--body);
+    max-block-size:0;overflow:hidden;opacity:0;transition:max-block-size .28s ease,opacity .28s ease}
+  .opt.open .detail{max-block-size:120px;opacity:1}
+  .opt .more .chev{transition:transform .2s}
+  .opt.open .more .chev{transform:rotate(180deg)}
+
+  /* ===== Gauges panel ===== */
+  .panel{background:var(--card);border:1.6px solid var(--border);border-radius:var(--r-xl);
+    padding:18px 18px 20px;box-shadow:var(--shadow-sm)}
+  /* panel spans full width below the options */
+  .panel-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+  .panel-top .k{font-size:12px;color:var(--body);font-weight:700}
+  .panel-top .v{font-size:15px;font-weight:800;color:var(--heading)}
+  .costchip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+    color:var(--heading);background:var(--elevated);border:1px solid var(--border);padding:5px 11px;border-radius:var(--r-full);margin-top:10px}
+  .costchip .cd{width:7px;height:7px;border-radius:50%;background:var(--cost)}
+
+  .gauges{margin-top:16px;display:grid;gap:18px}
+  @media(min-width:560px){.gauges{grid-template-columns:1fr 1fr;gap:20px 32px}}
+  .gauge .g-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:9px}
+  .gauge .g-name{font-size:13.5px;font-weight:700;color:var(--heading)}
+  .gauge .g-level{font-size:12.5px;font-weight:700;color:var(--green)}
+  .gauge.cost .g-level{color:var(--cost)}
+  .track{position:relative;height:8px;border-radius:var(--r-full);background:var(--track);border:1px solid var(--border)}
+  .fill{position:absolute;inset-block:0;inset-inline-start:0;inline-size:0;border-radius:var(--r-full);
+    background:var(--green);transition:inline-size .6s cubic-bezier(.22,.61,.36,1)}
+  .gauge.cost .fill{background:var(--cost)}
+  .thumb{position:absolute;inset-block-start:50%;inset-inline-start:0;width:18px;height:18px;border-radius:50%;
+    background:#fff;border:3px solid var(--green);box-shadow:var(--shadow-md);
+    transform:translateY(-50%);margin-inline-start:-9px;
+    transition:inset-inline-start .6s cubic-bezier(.22,.61,.36,1)}
+  .gauge.cost .thumb{border-color:var(--cost)}
+  .scale{position:absolute;inset-block-start:15px;font-size:10.5px;color:var(--body)}
+  .scale.min{inset-inline-start:0}
+  .scale.max{inset-inline-end:0}
+  .gauge{padding-bottom:14px}
+  .ghint{font-size:11.5px;color:var(--body);margin-top:14px;display:flex;align-items:center;gap:6px}
+  .ghint .cd{width:7px;height:7px;border-radius:50%;background:var(--cost);flex:none}
+
+  /* ===== Quiz ===== */
+  .quiz{background:var(--surface);border:1.6px solid var(--border);border-radius:var(--r-xl);padding:20px;box-shadow:var(--shadow-sm)}
+  .q{margin-bottom:18px}
+  .q:last-of-type{margin-bottom:0}
+  .q-t{font-size:14.5px;font-weight:700;color:var(--heading);margin:0 0 10px}
+  .opts3{display:grid;gap:8px;grid-template-columns:1fr}
+  @media(min-width:560px){.opts3{grid-template-columns:1fr 1fr 1fr}}
+  .chip{border:1.5px solid var(--border);background:var(--card);border-radius:var(--r-md);padding:11px 12px;
+    font-family:inherit;color:var(--body);font-size:13.5px;cursor:pointer;text-align:start;transition:.15s;line-height:1.45}
+  .chip:hover{border-color:color-mix(in srgb,var(--green) 45%,var(--border))}
+  .chip:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .chip[aria-pressed="true"]{border-color:var(--green);background:color-mix(in srgb,var(--green) 12%,var(--surface));color:var(--heading);font-weight:700}
+  .qa{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .btn{font-family:inherit;font-weight:700;font-size:14px;border-radius:var(--r-md);padding:11px 20px;cursor:pointer;border:1px solid transparent;transition:.15s}
+  .btn-primary{background:var(--green);color:var(--green-ink)}
+  .btn-primary:hover{filter:brightness(1.05)}
+  .btn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .qnote{font-size:12.5px;color:var(--body)}
+
+  /* ===== Recommendation ===== */
+  .rec{margin-top:16px;border:1.6px solid var(--green);border-radius:var(--r-xl);overflow:hidden;display:none;box-shadow:var(--shadow-md)}
+  .rec.show{display:block}
+  .rec .top{background:linear-gradient(135deg,var(--band-a),var(--band-b));color:#fff;padding:16px 20px}
+  .rec .top .lab{font-size:12px;font-weight:700;color:var(--green)}
+  .rec .top .name{font-size:19px;font-weight:800;color:#fff;margin-top:3px}
+  .rec .body{padding:16px 20px;background:var(--surface)}
+  .rec .body p{margin:0;font-size:14px;color:var(--body)}
+
+  footer{margin:40px 0 10px;padding-top:18px;border-top:1px solid var(--border);color:var(--body);font-size:12.5px;text-align:center}
+
+  @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+
+<div id="app">
+  <header class="site">
+    <div class="site-in">
+      <div class="brand">
+        <span class="dot"></span>
+        <b>Edu<i>Mind</i></b>
+      </div>
+      <button class="tbtn" id="themeBtn" type="button" aria-label="تبديل الوضع الليلي">
+        <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="band">
+        <h1>خيارات استضافة خدمات الذكاء الاصطناعي في الجامعة</h1>
+        <span class="band-logo" role="img" aria-label="ats-ware">
+          <svg width="150" height="48" viewBox="0 0 107 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.0686 23.6155V33.8388H0V15.7703H10.2142V23.6155H18.0686Z" fill="#65C6BF"></path>
+            <path d="M28.2785 5.54028V23.6088H18.0643V15.7636H10.21V5.54028H28.2785Z" fill="#65C6BF"></path>
+            <path d="M41.1778 9.54098C43.0002 7.21749 46.1255 6.0603 50.5538 6.0603C53.4422 6.0603 56.0026 6.63434 58.2441 7.77331C60.4856 8.92138 61.6063 11.0809 61.6063 14.2517V26.3339C61.6063 27.1722 61.6246 28.1836 61.6519 29.3772C61.6974 30.2793 61.8341 30.8898 62.0619 31.2178C62.2897 31.5367 62.6268 31.81 63.0733 32.0196V33.031H55.5835C55.3739 32.5025 55.2281 32.0014 55.1461 31.5367C55.0641 31.072 55.0003 30.5344 54.9548 29.9421C54.0072 30.9718 52.9046 31.8556 51.6654 32.5754C50.1802 33.4319 48.5037 33.8602 46.6358 33.8602C44.2485 33.8602 42.2804 33.1768 40.7222 31.8192C39.1641 30.4615 38.3896 28.5298 38.3896 26.0332C38.3896 22.7894 39.638 20.4477 42.1346 18.999C43.5013 18.2062 45.515 17.6413 48.1756 17.3042L50.5174 17.0126C51.793 16.8486 52.7042 16.6481 53.2509 16.4112C54.2349 15.9921 54.727 15.336 54.727 14.4522C54.727 13.377 54.3534 12.6299 53.6062 12.2198C52.8591 11.8098 51.7566 11.6002 50.3078 11.6002C48.6768 11.6002 47.5287 12.0011 46.8544 12.8121C46.3715 13.4044 46.0526 14.2153 45.8886 15.2267H39.2461C39.3919 12.9214 40.0389 11.0262 41.1778 9.55009V9.54098ZM46.2986 28.056C46.9456 28.5845 47.7292 28.8578 48.6677 28.8578C50.1529 28.8578 51.5196 28.4205 52.768 27.5549C54.0163 26.6801 54.6632 25.0947 54.7179 22.7894V20.229C54.2805 20.5024 53.8431 20.7211 53.3967 20.8942C52.9502 21.0673 52.3488 21.2222 51.5743 21.368L50.0253 21.6596C48.5766 21.9147 47.5378 22.2336 46.9091 22.5981C45.843 23.2268 45.3146 24.2018 45.3146 25.523C45.3146 26.6984 45.6426 27.5458 46.3077 28.056H46.2986Z" fill="currentColor"></path>
+            <path d="M80.4309 28.547V33.6952L77.1689 33.8136C73.916 33.923 71.6928 33.358 70.4991 32.1188C69.7246 31.3261 69.3419 30.1143 69.3419 28.465V12.2553H65.6699V7.34405H69.3419V0H76.1575V7.34405H80.44V12.2553H76.1575V26.178C76.1575 27.2623 76.2942 27.9274 76.5675 28.2008C76.8409 28.465 77.6792 28.6017 79.0824 28.6017C79.292 28.6017 79.5106 28.6017 79.7475 28.5926C79.9844 28.5926 80.2122 28.5744 80.44 28.5562L80.4309 28.547Z" fill="currentColor"></path>
+            <path d="M102.732 7.80924C104.791 9.13044 105.976 11.3993 106.285 14.6248H99.3969C99.2966 13.741 99.0506 13.0394 98.6497 12.52C97.8934 11.5815 96.5996 11.1168 94.7863 11.1168C93.292 11.1168 92.2168 11.3537 91.579 11.8184C90.9412 12.2831 90.6223 12.8298 90.6223 13.4585C90.6223 14.2512 90.9594 14.8162 91.6337 15.1715C92.3079 15.5451 94.7043 16.1829 98.8137 17.085C101.556 17.7319 103.606 18.7069 104.973 20.0098C106.331 21.331 107.005 22.9803 107.005 24.9666C107.005 27.5726 106.03 29.7047 104.089 31.3631C102.149 33.0123 99.1508 33.8415 95.087 33.8415C91.0232 33.8415 87.8888 32.9667 85.9115 31.2173C83.9343 29.4678 82.9502 27.2446 82.9502 24.5293H89.9389C90.0847 25.7502 90.3945 26.625 90.8774 27.1443C91.7339 28.0646 93.3102 28.5202 95.6155 28.5202C96.9731 28.5202 98.0483 28.3197 98.8411 27.9188C99.6429 27.5179 100.035 26.9165 100.035 26.1056C100.035 25.2946 99.7158 24.7479 99.0688 24.3379C98.4219 23.937 96.0346 23.2445 91.8888 22.2604C88.9093 21.5224 86.8045 20.593 85.5835 19.4814C84.3625 18.388 83.7429 16.8025 83.7429 14.7433C83.7429 12.3104 84.6996 10.2238 86.604 8.4744C88.5175 6.72495 91.1963 5.85022 94.6679 5.85022C98.1394 5.85022 100.636 6.50626 102.714 7.80924H102.732Z" fill="currentColor"></path>
+          </svg>
+        </span>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>اختر خيار التشغيل</h2>
+        <p>اضغط على أي خيار لتنزلق المؤشرات في الأسفل إلى مستوياته.</p>
+      </div>
+
+      <div class="options" id="options"></div>
+
+      <div class="panel">
+        <div class="panel-top">
+          <span class="k">لوحة المؤشرات</span>
+          <span class="v" id="panelName">—</span>
+        </div>
+        <span class="costchip"><span class="cd"></span><span id="costModel">—</span></span>
+
+        <div class="gauges" id="gauges"></div>
+
+        <div class="ghint"><span class="cd"></span> مؤشر التكلفة بالأزرق: كلّما ارتفع زادت التكلفة.</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ===== data (levels 0..3) ===== */
+var SOL = [
+  {id:"onprem", grp:"الخاص", cost:"لمرة واحدة (رأسمالي)",
+   name:"خادم مملوك داخل الجامعة (On-Premise)",
+   desc:"خصوصية كاملة وأداء عالٍ، مع تكلفة رأسمالية لمرة واحدة لشراء الأجهزة دون رسوم شهرية.",
+   m:{privacy:3,performance:3,ease:2,cost:2}},
+  {id:"rented", grp:"الخاص", cost:"اشتراك دوري ثابت",
+   name:"خادم خاص مستأجر (Rented Private Server)",
+   desc:"قوة معالجة خاصة بالكامل للجامعة مستأجرة من مزوّد عالمي (Oracle / Google / AWS)، باشتراك دوري وهو الأعلى تكلفة.",
+   m:{privacy:3,performance:3,ease:2,cost:3}},
+  {id:"cloud", grp:"السحابي", cost:"الدفع حسب الاستهلاك",
+   name:"الربط السحابي عبر الواجهات",
+   desc:"ربط مباشر بمزوّدي الذكاء الاصطناعي العالميين (OpenAI, Claude, DeepSeek, Qwen): الأسهل والأقل تكلفة تأسيسية، بخصوصية وأداء أقل.",
+   m:{privacy:1,performance:2,ease:3,cost:1}},
+  {id:"hybrid", grp:"الهجين", cost:"تكلفة مرنة",
+   name:"الحل الهجين",
+   desc:"مزيج بين الخادم الخاص والسحابة لضمان استقرار الخدمة واستيعاب أوقات الذروة، مع مرونة في التكلفة.",
+   m:{privacy:2,performance:3,ease:2,cost:2}}
+];
+var DIMS=[
+  {k:"privacy",label:"الخصوصية"},
+  {k:"performance",label:"الأداء"},
+  {k:"ease",label:"سهولة التركيب"},
+  {k:"cost",label:"التكلفة",cost:true}
+];
+var LEVEL={1:"منخفض",2:"متوسط",3:"مرتفع"};
+var byId={}; SOL.forEach(function(s){byId[s.id]=s;});
+var selected="onprem";
+
+/* ===== options ===== */
+var optHost=document.getElementById("options");
+SOL.forEach(function(s){
+  var b=document.createElement("div");
+  b.className="opt";
+  b.setAttribute("role","button");
+  b.setAttribute("tabindex","0");
+  b.setAttribute("aria-pressed","false");
+  b.setAttribute("data-sel",s.id);
+  b.innerHTML=
+    '<div class="opt-row">'
+    +'<span class="title">'+s.name+'</span>'
+    +'<span class="grp">'+s.grp+'</span>'
+    +'</div>'
+    +'<button type="button" class="more" data-more="'+s.id+'">تفاصيل الخيار <span class="chev">▾</span></button>'
+    +'<div class="detail">'+s.desc+'</div>';
+  optHost.appendChild(b);
+});
+optHost.querySelectorAll('.opt').forEach(function(card){
+  card.addEventListener("click",function(){ select(card.getAttribute("data-sel")); });
+  card.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); select(card.getAttribute("data-sel")); }});
+});
+optHost.querySelectorAll('[data-more]').forEach(function(btn){
+  btn.addEventListener("click",function(){ btn.closest(".opt").classList.toggle("open"); });
+});
+
+/* ===== gauges ===== */
+var gHost=document.getElementById("gauges");
+DIMS.forEach(function(d){
+  var g=document.createElement("div");
+  g.className="gauge"+(d.cost?" cost":"");
+  g.innerHTML=
+    '<div class="g-head"><span class="g-name">'+d.label+'</span><span class="g-level" data-lvl="'+d.k+'">—</span></div>'
+    +'<div class="track">'
+    +'<div class="fill" data-fill="'+d.k+'"></div>'
+    +'<div class="thumb" data-thumb="'+d.k+'"></div>'
+    +'<span class="scale min">منخفض</span><span class="scale max">مرتفع</span>'
+    +'</div>';
+  gHost.appendChild(g);
+});
+
+function paint(){
+  var s=byId[selected];
+  document.querySelectorAll('#options [data-sel]').forEach(function(b){
+    b.setAttribute("aria-pressed", String(b.getAttribute("data-sel")===selected));
+  });
+  document.getElementById("panelName").textContent=s.name.split(" (")[0];
+  document.getElementById("costModel").textContent="نموذج التكلفة: "+s.cost;
+  DIMS.forEach(function(d){
+    var v=s.m[d.k], pct=(v/3)*100;
+    gHost.querySelector('[data-fill="'+d.k+'"]').style.insetInlineStart="0";
+    gHost.querySelector('[data-fill="'+d.k+'"]').style.inlineSize=pct+"%";
+    gHost.querySelector('[data-thumb="'+d.k+'"]').style.insetInlineStart=pct+"%";
+    gHost.querySelector('[data-lvl="'+d.k+'"]').textContent=LEVEL[v];
+  });
+}
+function select(id){ selected=id; paint(); }
+
+/* ===== theme ===== */
+var root=document.documentElement;
+function applyIcon(){
+  var dark = root.getAttribute("data-theme")==="dark" ||
+    (!root.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  document.getElementById("themeIcon").innerHTML = dark
+    ? '<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/>'
+    : '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+}
+try{var sv=localStorage.getItem("edumind_theme"); if(sv) root.setAttribute("data-theme",sv);}catch(e){}
+document.getElementById("themeBtn").addEventListener("click",function(){
+  var cur=root.getAttribute("data-theme");
+  var next = cur==="dark" ? "light" : (cur==="light" ? "dark" :
+    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "dark"));
+  root.setAttribute("data-theme",next);
+  try{localStorage.setItem("edumind_theme",next);}catch(e){}
+  applyIcon();
+});
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyIcon);
+
+/* ===== boot ===== */
+paint(); applyIcon();
+</script>
